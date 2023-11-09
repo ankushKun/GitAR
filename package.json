@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@irys/arweave": "^0.0.2",
+    "ardrive-cli": "^2.0.1",
     "arweave-wallet-connector": "^1.0.2",
     "arweave-wallet-kit": "^1.0.3",
     "dotenv": "^16.3.1",

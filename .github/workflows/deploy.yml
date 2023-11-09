@@ -14,7 +14,9 @@ jobs:
         with:
           node-version: 18.x
       - run: npm i
+      - run: npm i -g ardrive-cli
       - run: npm run deploy
         env:
           SEED: ${{ secrets.SEED }}
+          WALLET64: ${{ secrets.WALLET64 }}
           GITAR_FOLDER: ${{ secrets.GITAR_FOLDER_EID }}
