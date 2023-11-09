@@ -19,4 +19,4 @@ jobs:
         env:
           SEED: ${{ secrets.SEED }}
           WALLET64: ${{ secrets.WALLET64 }}
-          GITAR_FOLDER: ${{ secrets.GITAR_FOLDER_EID }}
+          GITAR_FOLDER_EID: ${{ secrets.GITAR_FOLDER_EID }}
