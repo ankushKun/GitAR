@@ -84,7 +84,7 @@ export default function Navbar() {
             className="ring-1 transition-all duration-200 hover:scale-105 ring-black rounded-lg m-1 px-3 hover:shadow-lg shadow-black flex justify-center items-center gap-2 p-1 sm:hidden">
             <img src={hamMenu} width={22} />
         </button>
-        {_menuOpen && <div id="menu" className={`${menuOpen ? "slide-in-bottom" : "slide-out-bottom"} absolute bg-[#080c3c]/70 w-full h-3/4 border border-black rounded-t-3xl p-10 backdrop-blur z-20 text-white bottom-0 left-0 right-0 flex flex-col items-end gap-10`}>
+        {_menuOpen && <div id="menu" className={`${menuOpen ? "slide-in-bottom" : "slide-out-bottom"} fixed bg-[#080c3c]/70 w-full h-3/4 border border-black rounded-t-3xl p-10 backdrop-blur z-20 text-white bottom-0 left-0 right-0 flex flex-col items-end gap-10`}>
             <button onClick={menuToggle} className=" ring-1 ring-white/20 rounded-full p-1 px-3 -m-5">X</button>
             {MenuLinks.map((link, i) => {
                 return <MenuLink key={i} to={link.to} text={link.text} />
