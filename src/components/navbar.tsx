@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArweaveWebWallet } from 'arweave-wallet-connector'
 import walletImg from "../assets/wallet.svg"
 import hamMenu from "../assets/hamburger.svg"
 
@@ -10,22 +9,24 @@ const MenuLinks = [
     { to: "/about", text: "About" },
 ]
 
-const state = { url: 'arweave.app' }
-const wallet = new ArweaveWebWallet({
-    name: "GitAR",
-    logo: 'https://jfbeats.github.io/ArweaveWalletConnector/placeholder.svg'
 
-}, { state })
 
-export default function Navbar() {
-    const [address, setAddress] = useState<string | undefined>()
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function Navbar({ wallet }: { wallet: any }) {
     const [menuOpen, setMenuOpen] = useState<boolean>(false)
     const [_menuOpen, _setMenuOpen] = useState<boolean>(false)
+    const [isConnected, setIsConnected] = useState<boolean>(wallet.connected)
 
+    // check for browser events
     useEffect(() => {
-        if (localStorage.getItem("address")) {
-            setAddress(localStorage.getItem("address") as string)
-        }
+        window.addEventListener('WalletConnected', () => {
+            console.log("connected")
+            setIsConnected(true)
+        })
+        window.addEventListener('WalletDisconnected', () => {
+            console.log("disconnected")
+            setIsConnected(false)
+        })
     }, [])
 
     useEffect(() => {
@@ -41,18 +42,6 @@ export default function Navbar() {
     function connect() {
         wallet.connect()
     }
-
-    wallet.on('connect', () => {
-        console.log("connected", wallet.address)
-        localStorage.setItem("address", wallet.address as string)
-        setAddress(wallet.address)
-    })
-
-    wallet.on('disconnect', () => {
-        console.log("disconnected")
-        localStorage.removeItem("address")
-        setAddress(undefined)
-    })
 
     function disconnect() {
         wallet.disconnect()
@@ -74,10 +63,10 @@ export default function Navbar() {
                     return <MenuLink key={i} to={link.to} text={link.text} />
                 })
             }
-            <button onClick={wallet.connected ? disconnect : connect}
+            <button onClick={isConnected ? disconnect : connect}
                 className="flex ring-1 transition-all duration-200 hover:scale-105 ring-black rounded-lg m-1 px-3 hover:shadow-lg shadow-black justify-center items-center gap-2 p-1">
                 <img src={walletImg} width={20} />
-                <span className="hidden sm:flex">{wallet.connected ? `${address?.slice(0, 3)}...${address?.slice(address?.length - 3, address?.length)}` : `Connect`}</span>
+                <span className="hidden sm:flex">{isConnected ? `${wallet.address?.slice(0, 3)}...${wallet.address?.slice(wallet.address?.length - 3, wallet.address?.length)}` : `Connect`}</span>
             </button>
         </div>
         <button onClick={menuToggle}
@@ -86,6 +75,11 @@ export default function Navbar() {
         </button>
         {_menuOpen && <div id="menu" className={`${menuOpen ? "slide-in-bottom" : "slide-out-bottom"} fixed bg-[#080c3c]/70 w-full h-3/4 border border-black rounded-t-3xl p-10 backdrop-blur z-20 text-white bottom-0 left-0 right-0 flex flex-col items-end gap-10`}>
             <button onClick={menuToggle} className=" ring-1 ring-white/20 rounded-full p-1 px-3 -m-5">X</button>
+            <button onClick={isConnected ? disconnect : connect}
+                className="flex ring-1 transition-all duration-200 hover:scale-105 ring-white rounded-lg m-1 px-3 hover:shadow-lg shadow-black justify-center items-center gap-2 p-1 absolute bottom-20 text-white">
+                <img src={walletImg} width={20} className="invert" />
+                <span className="">{isConnected ? `${wallet.address?.slice(0, 3)}...${wallet.address?.slice(wallet.address?.length - 3, wallet.address?.length)}` : `Connect`}</span>
+            </button>
             {MenuLinks.map((link, i) => {
                 return <MenuLink key={i} to={link.to} text={link.text} />
             })}

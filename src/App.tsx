@@ -1,8 +1,10 @@
+import { Link } from "react-router-dom"
 import Page from "./components/page"
 
-export default function App() {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function App({ wallet }: any) {
 
-  return <Page title="GitAR">
+  return <Page title="GitAR" wallet={wallet}>
     <div className="z-10 mx-auto">
       <div className="mx-auto bg-cover bg-center flex justify-center items-center pb-10 rounded-3xl w-full min-h-[80vh]"
         style={{ backgroundImage: "url('https://hub.easycrypto.com/wp-content/uploads/2023/04/Arweave-AR-crypto-tokens-floating-scaled.jpg')" }}
@@ -27,6 +29,11 @@ export default function App() {
           <span className="text-5xl bg-[#080c3c] text-white rounded-full p-2 px-5">4</span><span className="text-4xl font-extralight"><span className="text-green-500 font-bold">Get rewarded</span> in Atomic Assets or AR</span>
         </div>
       </div>
+      <Link to="/browse">
+        <button className="text-center block my-20 text-3xl font-bold bg-green-400 w-fit mx-auto p-3 px-5 rounded-xl hover:scale-105 hover:shadow-lg shadow-black transition-all duration-200">
+          Checkout Latest Bounties
+        </button>
+      </Link>
     </div>
   </Page>
 }
