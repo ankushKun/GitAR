@@ -163,6 +163,10 @@ ardrive upload-file -s "${SEED}" -l ./manifest.json --content-type application/x
 
 Check out.json for a field called `dataTxId`, your website is now live at `https://arweave.net/<dataTxId>` 🥳
 
+This dataTxId can be used to register a custom subdomain on [Permapages ARNS](https://permapages.app/#/arns)
+
+Once you get ARNS Test tokens and register a subdomain, you can check the transaction history to get your `ANT Contract Address`
+
 
 # SmartWeave Contract
 
