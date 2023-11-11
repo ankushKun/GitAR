@@ -7,6 +7,7 @@ import Arweave from "arweave";
 dotenv.config()
 
 const ANT = "Tox1YO--_IKNcd6S1RZ0RqmP-72XrmW4JEtqIVk410E"
+const SUBDOMAIN = "gitar"
 
 const jwk = JSON.parse(Buffer.from(process.env.WALLET64, "base64").toString("utf-8"));
 // console.log(jwk)
@@ -44,7 +45,7 @@ Object.keys(paths).forEach((key) => {
     delete paths[key]
 })
 
-// console.log(manifest)
+console.log(manifest)
 
 fs.writeFileSync('./dist/manifest.json', JSON.stringify(manifest, null, 2))
 
@@ -52,7 +53,7 @@ console.log("Uploading files with manifest...")
 execSync(`cd ./dist && ardrive upload-file -s "${process.env.SEED}" -l ./manifest.json --content-type application/x.arweave-manifest+json -F ${process.env.GITAR_FOLDER_EID} --turbo > ../out.json`, _)
 
 const out = JSON.parse(fs.readFileSync('./out.json'))
-// console.log(out)
+console.log(out)
 
 const dataTxnId = out.created[0].dataTxId
 console.log("deployed at https://arweave.net/" + dataTxnId)
@@ -61,7 +62,7 @@ console.log("deployed at https://arweave.net/" + dataTxnId)
 console.log("Updating ANT token...")
 contract.writeInteraction({
     function: "setRecord",
-    subDomain: "gitar",
+    subDomain: SUBDOMAIN,
     transactionId: dataTxnId,
     ttlSeconds: 3600
 }).then((tx) => {

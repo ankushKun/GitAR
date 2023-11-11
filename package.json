@@ -15,10 +15,15 @@
     "ardrive-cli": "^2.0.1",
     "arweave-wallet-connector": "^1.0.2",
     "arweave-wallet-kit": "^1.0.3",
+    "arweavekit": "^1.5.1",
     "dotenv": "^16.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.18.0"
+    "react-markdown": "^9.0.0",
+    "react-router-dom": "^6.18.0",
+    "uuid": "^9.0.1",
+    "weavedb-sdk": "^0.37.2",
+    "weavedb-sdk-node": "^0.37.2"
   },
   "devDependencies": {
     "@irys/sdk": "^0.0.4",
