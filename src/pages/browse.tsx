@@ -146,18 +146,23 @@ export default function Browse({ wallet }: any) {
                         <div className="text-lg text-right">Project: <span className="font-semibold">{selectedBounty.projectName}</span></div>
                         <div className="text-gray-600">{timeStrToRelativeTime(selectedBounty.dateCreated)} by <Link to={`/profile?addr=${selectedBounty.creator}`} className="hover:text-black hover:underline underline-offset-4">{selectedBounty.creator}</Link></div>
                         <div className="text-xl text-justify my-10">{selectedBounty.description}</div>
-                        <div className="flex">
-                            {!selectedBounty.atomicReward && <div className="text-2xl font-light bg-green-300 w-fit px-2 rounded-lg"> Worth {selectedBounty.reward}</div>}
-                            {selectedBounty.atomicReward && <Link to={selectedBounty.url} target="_blank">
-                                <button className=" bg-red-200 text-2xl rounded-lg p-1 px-2 hover:scale-105 transition-all duration-200">View Atomic Reward</button>
-                            </Link>}
-                            {selectedBounty.claimed && <div className="text-2xl font-light bg-green-300 w-fit px-2 rounded-lg ml-2">Claimed ☑️</div>}
+                        <div className="flex justify-between">
+                            <div className="flex">
+                                {!selectedBounty.atomicReward && <div className="text-2xl font-light bg-green-300 w-fit px-2 rounded-lg"> Worth {selectedBounty.reward}</div>}
+                                {selectedBounty.atomicReward && <Link to={selectedBounty.reward} target="_blank">
+                                    <button className=" bg-red-200 text-2xl rounded-lg p-1 px-2 hover:scale-105 transition-all duration-200">View Atomic Reward</button>
+                                </Link>}
+                                {selectedBounty.claimed && <div className="text-2xl font-light bg-green-300 w-fit px-2 rounded-lg ml-2">Claimed ☑️</div>}
+                            </div>
+                            <Link to={selectedBounty.url} target="_blank">
+                                <button className="ring-1 ring-black/50 bg-red-300 text-xl rounded-lg p-1 px-2 hover:scale-105 transition-all duration-200">View Task</button>
+                            </Link>
                         </div>
                         <div className="flex justify-between">
                             <div className="text-2xl font-semibold mt-5">Submitted Solutions</div>
-                            <button className={`${submitClaimVisible ? "bg-red-200" : "bg-green-100"} rounded-lg p-1 px-2 my-3 ${selectedBounty.claimed ? "bg-gray-300" : "hover:scale-105 hover:shadow-lg"} transition-all duration-200 ring-1 ring-black/50`}
-                                onClick={() => setSubmitClaimVisible(!submitClaimVisible)} disabled={selectedBounty.claimed}
-                            >{submitClaimVisible ? "Cancel" : "Submit Your Solution"}</button>
+                            {!selectedBounty.claimed && <button className={`${submitClaimVisible ? "bg-red-200" : "bg-green-100"} rounded-lg p-1 px-2 my-3 hover:scale-105 hover:shadow-lg transition-all duration-200 ring-1 ring-black/50`}
+                                onClick={() => setSubmitClaimVisible(!submitClaimVisible)}
+                            >{submitClaimVisible ? "Cancel" : "Submit Your Solution"}</button>}
                         </div>
                         {
                             submitClaimVisible && <div className="flex flex-col gap-3 mb-3 ring-1 p-1 rounded-lg ring-black/40">

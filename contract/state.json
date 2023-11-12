@@ -24,7 +24,7 @@
             "projectName": "GitAR",
             "title": "Write a blog post about GitAR",
             "description": "We need to write a blog post about GitAR and publish it on the permaweb. The blog post should be about 500 words and should include the following topics: 1. What is GitAR? 2. How to use GitAR? 3. How can it help arweave thrive?",
-            "reward": "",
+            "reward": "https://bazar.arweave.dev/#/asset/0j6JG-A-ceXQDV_2a3RyL6G_BfRNh6r3QKrE8ciTcD8",
             "atomicReward": true,
             "url": "https://github.com/ankushKun/GitAR/issues/2",
             "creator": "XDOqw28LKTa2wSechfMUmBU7PfLl1Q3C3RyZ_bNogWE",
