@@ -1,5 +1,7 @@
 # GitAR 🎸 
 
+<a href="https://gitar_ankushkun.g8way.io" target="_blank"><img src="./src/assets/perma.svg" width="150px"></a>
+
 - [GitAR 🎸](#gitar-)
 - [About](#about)
 - [Setup and Installation](#setup-and-installation)
@@ -8,13 +10,14 @@
 - [ARdrive setup](#ardrive-setup)
   - [Manual deployment](#manual-deployment)
 - [SmartWeave Contract](#smartweave-contract)
+- [License](#license)
+- [Contributing](#contributing)
 
 # About
 
-GitAR is a bounty platform for the arweave ecosystem.\
-It allows users to create bounties for any project on arweave.\
-Users can then submit a url pointing to whatever work they have done and the project owner can accept or reject the submission.\
-If the submission, the user will be rewarded with the bounty reward in AR or Atomic Assets.
+GitAR is a bounty platform for the arweave ecosystem.
+It allows users to create bounties for any project on arweave.
+Other users can then submit a url pointing to whatever work they have done and the project owner can accept or reject the submission. The bounty creator can then reward valid submissions with AR or Atomic Assets.
 
 # Setup and Installation
 
@@ -180,4 +183,12 @@ node contract/deploy.js
 
 This will store the contract address in the deployment.json file.
 
-**TODO: Update the code so that there is no need to manually set environment to local or mainnet**
+# License
+
+This project is licensed under the GNU GPL v3.0 License - see the [LICENSE](LICENSE) file for details
+
+# Contributing
+
+Feel free to open issues and pull requests. Both code and non code contributions are welcome 😊
+
+If you need any assistance feel free to [email me](mailto:ankush4singh@gmail.com) or ping me on [Discord @ankushkun](https://discord.gg/vFg3armSck)
