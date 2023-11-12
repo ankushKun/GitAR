@@ -8,7 +8,7 @@ import Browse from './pages/browse.tsx'
 import About from './pages/about.tsx'
 import './index.css'
 
-const state: State = { url: 'arweave.app', showIframe: true, usePopup: true, requirePopup: true, keepPopup: true, connected: false }
+const state: State = { url: 'arweave.app', showIframe: false, usePopup: false, requirePopup: false, keepPopup: false, connected: false }
 const appInfo: AppInfo = {
   name: "GitAR",
   logo: 'https://jfbeats.github.io/ArweaveWalletConnector/placeholder.svg'

@@ -20,7 +20,8 @@ function newBounty(state, action) {
 
     bounty.creator = action.caller
     bounty.claimed = false
-    bounty.dateCreated = new Date().toDateString()
+    bounty.dateCreated = new Date()
+    bounty.claimData = []
 
     state.bounties[state.bcount + 1] = bounty
     state.bcount += 1
@@ -38,6 +39,7 @@ function submitClaim(state, action) {
     if (bounty.claimed) throw new ContractError("Bounty already claimed")
     claimData.creator = action.caller
     if (!bounty.claimData) bounty.claimData = []
+    delete claimData.bountyId
     bounty.claimData.push(claimData)
 
     return { state }
@@ -53,13 +55,14 @@ function approveClaim(state, action) {
     if (!bounty.claimData) throw new ContractError("No claim data found")
     const claimData = bounty.claimData
     if (claimData.length == 0) throw new ContractError("No claim data found")
-    const claimedBy = action.input.claimedBy
-    if (!claimedBy) throw new ContractError("Claimed By is required")
-    const claim = claimData.find(c => c.creator == claimedBy)
+    const claimIdx = action.input.claimIdx
+    if (!claimIdx) throw new ContractError("Claimed Index is required")
+    const claim = claimData[claimIdx]
     if (!claim) throw new ContractError("Claim does not exist")
 
     bounty.claimed = true
-    bounty.claimedBy = claimedBy
+    bounty.claimedBy = claim.creator
+    bounty.solutionUrl = claim.url
 
     return { state }
 }
@@ -79,8 +82,12 @@ function getBounty(state, action) {
 
 function getBountiesForAddress(state, action) {
     const address = action.input.address
+    console.log(address)
     if (!address) throw new ContractError("Address is required")
-    const bounties = state.bounties.filter(b => b.creator == address)
+    const bounties = Object.values(state.bounties).filter(b => {
+        console.log(b.creator, address)
+        return b.creator == address
+    })
 
     return { result: bounties }
 }

@@ -1,5 +1,37 @@
 {
-    "bounties":{},
-    "users":{},
-    "bcount":0
+    "bounties": {
+        "1": {
+            "projectName": "GitAR",
+            "title": "Deploy on permaweb and setup Github Actions",
+            "description": "The project is currently hosted on Github Pages. We need to deploy it on permaweb and setup Github Actions for automatic deployment on every push to the main branch",
+            "reward": "10 AR",
+            "atomicReward": false,
+            "url": "https://github.com/ankushKun/GitAR/issues/1",
+            "creator": "XDOqw28LKTa2wSechfMUmBU7PfLl1Q3C3RyZ_bNogWE",
+            "dateCreated": "2023-11-12T06:37:58.318Z",
+            "claimed": true,
+            "claimIdx": 0,
+            "claimData": [
+                {
+                    "creator": "XDOqw28LKTa2wSechfMUmBU7PfLl1Q3C3RyZ_bNogWE",
+                    "url": "https://github.com/ankushKun/GitAR/blob/main/.github/workflows/deploy.yml"
+                }
+            ]
+        },
+        "2": {
+            "projectName": "GitAR",
+            "title": "Write a blog post about GitAR",
+            "description": "We need to write a blog post about GitAR and publish it on the permaweb. The blog post should be about 500 words and should include the following topics: 1. What is GitAR? 2. How to use GitAR? 3. How can it help arweave thrive?",
+            "reward": "",
+            "atomicReward": true,
+            "url": "https://github.com/ankushKun/GitAR/issues/2",
+            "creator": "XDOqw28LKTa2wSechfMUmBU7PfLl1Q3C3RyZ_bNogWE",
+            "dateCreated": "2023-11-12T06:37:58.318Z",
+            "claimed": false
+        }
+    },
+    "users": {
+        "XDOqw28LKTa2wSechfMUmBU7PfLl1Q3C3RyZ_bNogWE": "ankushKun"
+    },
+    "bcount": 2
 }

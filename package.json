@@ -4,11 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "ENV=DEV vite",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "deploy": "npm run build && node deploy.js"
+    "deploy": "npm run build && node deploy.js",
+    "deploy:contract": "ENV=DEV node contract/deploy.js",
+    "deploy:contract:mainnet": "node contract/deploy.js"
   },
   "dependencies": {
     "@irys/arweave": "^0.0.2",
@@ -19,6 +21,7 @@
     "dotenv": "^16.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.1",
     "react-markdown": "^9.0.0",
     "react-router-dom": "^6.18.0",
     "uuid": "^9.0.1",
