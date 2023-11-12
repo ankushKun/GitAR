@@ -15,9 +15,13 @@
 
 # About
 
-GitAR is a bounty platform for the arweave ecosystem.
-It allows users to create bounties for any project on arweave.
-Other users can then submit a url pointing to whatever work they have done and the project owner can accept or reject the submission. The bounty creator can then reward valid submissions with AR or Atomic Assets.
+Got a product? 🤔 \
+Need something to be fixed or a new feature to be added?\
+A blog to be written? or any contribution towards your product?
+
+Now you can setup bounties for people and reward them with AR or Atomic Assets for their contributions 🤩 
+
+This would encourage newcomers and more developers to contribute to the Arweave ecosystem in both code and non code forms _yay!_
 
 # Setup and Installation
 
