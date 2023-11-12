@@ -9,6 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "deploy": "npm run build && node deploy.js",
+    "deploy:turbo": "TURBO=YES npm run build && node deploy.js",
     "deploy:contract": "ENV=DEV node contract/deploy.js",
     "deploy:contract:mainnet": "node contract/deploy.js"
   },

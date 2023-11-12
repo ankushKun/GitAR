@@ -27,10 +27,10 @@ const _ = (err, stdout, stderr) => {
 }
 
 console.log("Uploading...")
-execSync(`cd ./dist && ardrive upload-file -s '${process.env.SEED}' -l ./ -F ${process.env.GITAR_FOLDER_EID} --turbo`, _)
+execSync(`cd ./dist && ardrive upload-file -s '${process.env.SEED}' -l ./ -F ${process.env.GITAR_FOLDER_EID} ${process.env.TURBO == "YES" && "--turbo"}`, _)
 
 console.log("Creating manifest...")
-execSync(`ardrive create-manifest -s '${process.env.SEED}' -f ${process.env.GITAR_FOLDER_EID} --turbo --dry-run > manifest.json`, _)
+execSync(`ardrive create-manifest -s '${process.env.SEED}' -f ${process.env.GITAR_FOLDER_EID} ${process.env.TURBO == "YES" && "--turbo"} --dry-run > manifest.json`, _)
 
 console.log("Modifying manifest...")
 const output = JSON.parse(fs.readFileSync('./manifest.json'))
