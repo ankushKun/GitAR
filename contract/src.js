@@ -1,6 +1,8 @@
 /* eslint-disable no-undef */
 // import { ContractError } from "warp-contracts"
 
+// WRITE FUNCTIONS
+
 function addGithubUsername(state, action) {
     const githubUsername = action.input.githubUsername
     if (!githubUsername) throw new ContractError("Github Username is required")
@@ -18,13 +20,15 @@ function newBounty(state, action) {
     if (!bounty.url) throw new ContractError("URL is required")
     if (bounty.atomicReward == undefined) bounty.atomicReward = false
 
+    state.bcount += 1
+
     bounty.creator = action.caller
     bounty.claimed = false
     bounty.dateCreated = new Date()
     bounty.claimData = []
+    bounty.id = state.bcount
 
-    state.bounties[state.bcount + 1] = bounty
-    state.bcount += 1
+    state.bounties[state.bcount] = bounty
 
     return { state }
 }
@@ -67,6 +71,8 @@ function approveClaim(state, action) {
     return { state }
 }
 
+// READ FUNCTIONS
+
 function getBounties(state) {
     return { result: state.bounties }
 }
@@ -84,11 +90,7 @@ function getBountiesForAddress(state, action) {
     const address = action.input.address
     console.log(address)
     if (!address) throw new ContractError("Address is required")
-    const bounties = Object.values(state.bounties).filter(b => {
-        console.log(b.creator, address)
-        return b.creator == address
-    })
-
+    const bounties = Object.values(state.bounties).filter(bounty => bounty.creator == address)
     return { result: bounties }
 }
 

@@ -1,26 +1,19 @@
 import { useEffect, useState } from "react"
 import { viewContractState, writeContract } from "arweavekit/contract"
 import toast from 'react-hot-toast'
+import { Link } from "react-router-dom";
 import Page from "../components/page";
 import profile from "../assets/profile.svg"
 import walletImg from "../assets/wallet.svg"
 import deployment from "../../deployment.json"
 import { shortAddr } from "../utils/functions";
 import { type BountyEntry } from "./browse";
-
-type params = {
-    [foo: string]: string
-}
+import useParams from "../hooks/useParams";
 
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function Profile({ wallet }: { wallet: any }) {
-    const urlParams: params = {}
-    const pstr = window.location.toString().split("?")
-    pstr.length > 1 && pstr[1].split("&").forEach(param => {
-        const [key, value] = param.split("=")
-        urlParams[key] = value
-    })
+    const urlParams = useParams()
     if (urlParams.addr)
         console.log("Showing profile of", urlParams.addr)
     else if (wallet.connected)
@@ -106,7 +99,7 @@ export default function Profile({ wallet }: { wallet: any }) {
                 strategy: "arweave"
             })
             console.log(viewResult.viewContract.result)
-            setMyBounties(viewResult.viewContract.result)
+            setMyBounties(Object.values(viewResult.viewContract.result))
         }
         fetchBounties()
     }, [address, wallet])
@@ -172,7 +165,7 @@ export default function Profile({ wallet }: { wallet: any }) {
             {
                 myBounties.length > 0 ? <div className="flex flex-col gap-3">
                     {myBounties.map((bounty, i) => {
-                        return <div key={i} className="ring-1 ring-black p-2 rounded-lg bg-white/80 flex flex-col gap-2">
+                        return <Link to={`/browse?id=${bounty.id}`} key={i} className="ring-1 ring-black p-2 rounded-lg bg-white/80 flex flex-col gap-2">
                             <div className="text-xl font-semibold">{bounty.title}</div>
                             {/* <div className="text-lg font-light">{bounty.description}</div> */}
                             {!bounty.claimed && <>
@@ -180,7 +173,7 @@ export default function Profile({ wallet }: { wallet: any }) {
                                     : <div className="text-lg font-light bg-green-300 rounded-lg px-2 w-fit">{bounty.reward}</div>}
                             </>}
                             {bounty.claimed && <div className="text-lg font-light bg-green-300 rounded-lg px-2 w-fit">Solved ☑️</div>}
-                        </div>
+                        </Link>
                     })}
                 </div> : <div className="text-center">None listed</div>
             }

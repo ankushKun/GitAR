@@ -1,6 +1,7 @@
 {
     "bounties": {
         "1": {
+            "id": 1,
             "projectName": "GitAR",
             "title": "Deploy on permaweb and setup Github Actions",
             "description": "The project is currently hosted on Github Pages. We need to deploy it on permaweb and setup Github Actions for automatic deployment on every push to the main branch",
@@ -19,6 +20,7 @@
             ]
         },
         "2": {
+            "id": 2,
             "projectName": "GitAR",
             "title": "Write a blog post about GitAR",
             "description": "We need to write a blog post about GitAR and publish it on the permaweb. The blog post should be about 500 words and should include the following topics: 1. What is GitAR? 2. How to use GitAR? 3. How can it help arweave thrive?",

@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { viewContractState } from "arweavekit/contract"
+import toast from "react-hot-toast";
+import { writeContract } from "arweavekit/contract";
 import { timeStrToRelativeTime, shortAddr } from "../utils/functions";
 import Page from "../components/page";
 import deployment from "../../deployment.json"
+import useParams from "../hooks/useParams";
 
 type claimData = {
     url: string,
@@ -11,6 +14,7 @@ type claimData = {
 }
 
 export type BountyEntry = {
+    id?: string,
     projectName: string,
     title: string,
     description: string,
@@ -31,8 +35,25 @@ export type BountiesState = {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function Browse({ wallet }: any) {
+    const urlParams = useParams()
     const [bounties, setBounties] = useState<BountiesState>({})
     const [selectedBounty, setSelectedBounty] = useState<BountyEntry | null>(null)
+    const [submitClaimVisible, setSubmitClaimVisible] = useState<boolean>(false)
+    const [claimUrl, setClaimUrl] = useState<string>("")
+
+    useEffect(() => {
+        setSubmitClaimVisible(false)
+        setClaimUrl("")
+        // set url parameters to none
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const params: any = {}
+        const pstr = window.location.toString().split("?")
+        pstr.length > 1 && pstr[1].split("&").forEach(param => {
+            const [key, value] = param.split("=")
+            params[key] = value
+        })
+        window.history.pushState({}, "", pstr[0])
+    }, [selectedBounty])
 
     useEffect(() => {
         const fetchBounties = async () => {
@@ -47,9 +68,53 @@ export default function Browse({ wallet }: any) {
             })
             console.log(viewResult.viewContract.result)
             setBounties(viewResult.viewContract.result)
+            if (urlParams.id) {
+                setSelectedBounty(viewResult.viewContract.result[urlParams.id])
+            }
         }
         fetchBounties()
-    }, [wallet])
+    }, [urlParams.id, wallet])
+
+    async function submitClaim() {
+        console.log("submitting claim", selectedBounty?.title)
+
+        if (!wallet.connected) {
+            toast.error("Please connect your wallet first")
+            return
+        }
+        if (!selectedBounty) {
+            toast.error("Please select a bounty first")
+            return
+        }
+        if (!claimUrl) {
+            toast.error("Please enter a valid URL")
+            return
+        }
+
+        try {
+            const tx = await writeContract({
+                wallet: wallet,
+                contractTxId: deployment.contractAddr,
+                environment: deployment.network === "mainnet" ? "mainnet" : "local",
+                options: {
+                    function: "submitClaim",
+                    claimData: {
+                        bountyId: selectedBounty.id,
+                        url: claimUrl
+                    }
+                },
+                strategy: "arweave"
+            })
+            console.log(tx)
+            toast.success("Claim submitted successfully")
+            setSubmitClaimVisible(false)
+            setClaimUrl("")
+            setSelectedBounty(null)
+        } catch (err) {
+            console.log(err)
+            toast.error("Error submitting claim, check console for details")
+        }
+    }
 
 
     const BountyItem = (data: BountyEntry) => {
@@ -88,7 +153,20 @@ export default function Browse({ wallet }: any) {
                             </Link>}
                             {selectedBounty.claimed && <div className="text-2xl font-light bg-green-300 w-fit px-2 rounded-lg ml-2">Claimed ☑️</div>}
                         </div>
-                        <div className="text-2xl font-semibold my-2 mt-6">Submitted Solutions</div>
+                        <div className="flex justify-between">
+                            <div className="text-2xl font-semibold mt-5">Submitted Solutions</div>
+                            <button className={`${submitClaimVisible ? "bg-red-200" : "bg-green-100"} rounded-lg p-1 px-2 my-3 ${selectedBounty.claimed ? "bg-gray-300" : "hover:scale-105 hover:shadow-lg"} transition-all duration-200 ring-1 ring-black/50`}
+                                onClick={() => setSubmitClaimVisible(!submitClaimVisible)} disabled={selectedBounty.claimed}
+                            >{submitClaimVisible ? "Cancel" : "Submit Your Solution"}</button>
+                        </div>
+                        {
+                            submitClaimVisible && <div className="flex flex-col gap-3 mb-3 ring-1 p-1 rounded-lg ring-black/40">
+                                <div className="flex gap-2">
+                                    <input type="url" className="grow ring-1 ring-black p-1 rounded-lg" placeholder="Solution URL" onChange={(e) => setClaimUrl(e.target.value)} />
+                                    <button className="bg-green-200 w-fit rounded-lg ring-1 ring-black p-1 px-3 hover:scale-105 hover:shadow-md transition-all duration-200" onClick={submitClaim}>Submit</button>
+                                </div>
+                            </div>
+                        }
                         {(selectedBounty.claimData?.length > 0) ? <div className="flex flex-col gap-3 overflow-scroll p-0.5">
                             {selectedBounty.claimData?.map((claim, i) => {
                                 return <div className={`flex gap-5 items-cetner justify-center ${i == selectedBounty.claimIdx ? "bg-green-200" : "bg-zinc-100"} ring-1 ring-black/50 rounded-lg p-2 w-fit`}>
