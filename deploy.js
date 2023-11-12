@@ -50,7 +50,7 @@ console.log(manifest)
 fs.writeFileSync('./dist/manifest.json', JSON.stringify(manifest, null, 2))
 
 console.log("Uploading files with manifest...")
-execSync(`cd ./dist && ardrive upload-file -s "${process.env.SEED}" -l ./manifest.json --content-type application/x.arweave-manifest+json -F ${process.env.GITAR_FOLDER_EID} --turbo > ../out.json`, _)
+execSync(`cd ./dist && ardrive upload-file -s "${process.env.SEED}" -l ./manifest.json --content-type application/x.arweave-manifest+json -F ${process.env.GITAR_FOLDER_EID} ${process.env.TURBO == "YES" && "--turbo"} > ../out.json`, _)
 
 const out = JSON.parse(fs.readFileSync('./out.json'))
 console.log(out)
